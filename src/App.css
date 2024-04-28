@@ -36,3 +36,35 @@
     transform: rotate(360deg);
   }
 }
+.product{
+  background-image: url("https://www.shutterstock.com/image-photo/mobile-banking-network-online-payment-260nw-1431394361.jpg");
+  height:100vh;
+  background-size:cover;
+  padding:20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.heading{
+  color:white;
+  font-size:40px;
+}
+.service-form-container{
+ min-height:40px;
+ width:50%;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ background-color: white;
+ border-radius: 10px;
+}
+.form-container{
+  display: flex;
+  flex-direction: column;
+  padding:20px
+}
+.individual-field{
+  display:flex;
+  margin:10px
+}
