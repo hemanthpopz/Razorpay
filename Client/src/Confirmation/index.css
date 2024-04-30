@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+.logo-image{
+
+    width: 60px;
+}
+
+.logo-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.logo-text{
+    color: #67acb8;
+    font-family: 'Roboto';
+    font-size: 24px;
+}
+
+
+.right-tick{
+    font-size: 50px;
+    color:#3fa801 ;
+}
+
+
+.service-heading{
+    color: #555754;
+    font-family: "Jost", sans-serif;
+    font-weight: bold;
+    font-size: 40px;
+}
+
+
+.transaction-heading{
+
+    color: #636462;
+    font-family: "Raleway", sans-serif;
+}
