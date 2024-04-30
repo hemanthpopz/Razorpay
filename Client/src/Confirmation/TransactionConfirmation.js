@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
-import { useParams,redirect} from 'react-router-dom';
-import { PaymentContext } from '../App';
-import { NameContext } from '../App';
+import { Link} from 'react-router-dom';
+import { PaymentContext,NameContext,NumberContext,EmailContext,ServiceContext,ModeContext} from '../App';
+
 import './index.css'
 import { SiTicktick } from "react-icons/si";
+
+import { FaLongArrowAltLeft } from "react-icons/fa";
 import Logo from '../Images/Homaid-logo.webp'
 const TransactionConfirmation = () => {
   // const { transactionId, name, address } = useParams();
@@ -16,10 +18,18 @@ const TransactionConfirmation = () => {
 
   const [name] = useContext(NameContext)
 
-  // const [number] = useContext(Context)
-  
+  const [number] = useContext(NumberContext)
 
-  // console.log(name)
+  const [email] = useContext(EmailContext)
+
+  const [service] = useContext(ServiceContext)
+
+
+  const [mode] = useContext(ModeContext) 
+
+  const date = new Date()
+
+ const TimeOfPayment = date.getDate()+'/'+(date.getMonth()+1)+'/'+date.getFullYear()+'-'+date.getHours()+':'+date.getMinutes() 
 
   return (
     <div className='confirmation-container'>
@@ -37,11 +47,30 @@ const TransactionConfirmation = () => {
 
       <div className='transaction-details-container'>
 
-      <p>Name: {name} </p>
-      {/* <p>NUmber: {number}</p> */}
-      {/* <p>Name: {name}</p>
-      <p>Address: {address}</p> */}
-      {/* Display other transaction details */}
+      <p>Name : <span>{name}</span> </p>
+      <p>Transaction Id : <span>{paymentId}</span> </p>
+      <p>Number : <span>{number}</span></p>
+      <p>Email : <span>{email}</span></p>
+      <p>Service Type : <span>{service}</span></p>
+      <p>Time Of Payment : <span>{TimeOfPayment}</span> <span></span></p>
+      <p>Payment Method : <span>{mode}</span></p>
+    
+      </div>
+
+      <div className='redirect-container'>
+
+        <Link className='link' to='/'>
+
+          <div className='arrow-container'>
+           < FaLongArrowAltLeft className='arrow-icon'/>
+           
+           <p>Home Page</p> 
+
+          </div>
+           
+           
+           </Link>
+
       </div>
     </div>
   );

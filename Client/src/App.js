@@ -6,11 +6,19 @@ import TransactionConfirmation from "./Confirmation/TransactionConfirmation";
 import React, { useState } from "react";
 
 export const PaymentContext = React.createContext();
-export const NameContext = React.createContext()
+export const NameContext = React.createContext();
 
-export 
+export const NumberContext = React.createContext();
 
-function App() {
+
+export const EmailContext = React.createContext()
+
+export const ServiceContext = React.createContext()
+
+
+export const ModeContext = React.createContext()
+
+export function App() {
   const [paymentId, setPaymentId] = useState("");
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
@@ -19,32 +27,38 @@ function App() {
 
   const [service, setService] = useState("");
 
-  const [time, setTime] = useState("");
+  // const [time, setTime] = useState("");
 
   const [mode, setMode] = useState("");
 
-  console.log(name);
-  console.log(number);
   return (
-    <PaymentContext.Provider
-      value={
-       [paymentId, setPaymentId]
-      }
-    >
-      <NameContext.Provider
-      
-      value = {
-        [name,setName]
-      }
-      >
+    <PaymentContext.Provider value={[paymentId, setPaymentId]}>
+      <NameContext.Provider value={[name, setName]}>
 
-      
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<Product />} />
-          <Route path="/success" element={<TransactionConfirmation />} />
-        </Routes>
-      </div>
+        <NumberContext.Provider value = {[number, setNumber]}>
+          <EmailContext.Provider value={[email,setEmail]}>
+            <ServiceContext.Provider value={[service,setService]}>
+
+              <ModeContext.Provider value={[mode,setMode]}>
+
+              
+
+            
+
+         
+        
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<Product />} />
+            <Route path="/success" element={<TransactionConfirmation />} />
+          </Routes>
+        </div>
+
+        </ModeContext.Provider>
+        </ServiceContext.Provider>
+        </EmailContext.Provider>
+
+        </NumberContext.Provider>
       </NameContext.Provider>
     </PaymentContext.Provider>
   );

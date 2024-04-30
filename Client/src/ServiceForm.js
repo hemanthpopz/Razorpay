@@ -1,7 +1,7 @@
 import React, { useContext, useState} from 'react';
 
 
-import { NameContext } from './App';
+import { NameContext,NumberContext,EmailContext,ServiceContext,ModeContext} from './App';
 
 
 const ServiceForm = () => {
@@ -22,9 +22,23 @@ termsAgreed: false
 
 
   const [name,setName] = useContext(NameContext)
+
+  const [number,setNumber] = useContext(NumberContext)
+
+  const [email,setEmail] = useContext(EmailContext)
+
+  const [service,setService] = useContext(ServiceContext)
+
+
+  const [mode,setMode] = useContext(ModeContext)
   
 
   setName(formData.customerName)
+  setNumber(formData.contactNumber)
+  setEmail(formData.emailAddress)
+  setService(formData.serviceType)
+
+  setMode(formData.paymentMethod)
 
   const handleChange = (e) => {
     const { name, value,type,checked } = e.target;
