@@ -42,12 +42,12 @@ const TransactionConfirmation = () => {
       <SiTicktick className='right-tick'/>
       <h1 className='service-heading'>Service Booked Successfully !</h1>
 
-      <h3 className='transaction-heading'>Transaction Details</h3>
+      <h3 className='transaction-heading'><span>{name}</span></h3>
 
 
       <div className='transaction-details-container'>
 
-      <p>Name : <span>{name}</span> </p>
+      
       <p>Transaction Id : <span>{paymentId}</span> </p>
       <p>Number : <span>{number}</span></p>
       <p>Email : <span>{email}</span></p>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch,useNavigate} from 'react-router-dom';
 import ServiceForm from './ServiceForm';
-import { PaymentContext } from './App';
+import { PaymentContext,NameContext,EmailContext,NumberContext} from './App';
 
 import { useContext } from 'react';
 import TransactionConfirmation from './Confirmation/TransactionConfirmation'; // Import the confirmation page component
@@ -16,6 +16,12 @@ function Product() {
    
   const [paymentId,setPaymentId] =  useContext(PaymentContext)
 
+  const [name,setName] = useContext(NameContext)
+
+  const [email,setEmail] = useContext(EmailContext)
+
+
+  const [number,setNumber] = useContext(NumberContext)
   
   
   const navigate = useNavigate()
@@ -74,9 +80,9 @@ function Product() {
         },
         prefill: {
           //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
-          name: "Web Dev Matrix", //your customer's name
-          email: "webdevmatrix@example.com",
-          contact: "9000000000", //Provide the customer's phone number for better conversion rates
+          name: `${name}`, //your customer's name
+          email: `${email}`,
+          contact: `${number}`, //Provide the customer's phone number for better conversion rates
         },
         notes: {
           address: "Razorpay Corporate Office",
