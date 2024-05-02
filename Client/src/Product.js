@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch,useNavigate} from 'react-router-
 import ServiceForm from './ServiceForm';
 import { PaymentContext,NameContext,EmailContext,NumberContext} from './App';
 
+import axios from 'axios'
 import { useContext } from 'react';
 import TransactionConfirmation from './Confirmation/TransactionConfirmation'; // Import the confirmation page component
 
@@ -72,8 +73,20 @@ function Product() {
 
           if(jsonRes.msg === 'success'){
 
+           
+
             setPaymentId(PaymentID)
             navigate('/success')
+
+
+            const toSendemailUrl = 'http://localhost:5000/getData'
+
+            const emailData = {
+              name,email
+            }
+
+            const emailResponse = await axios.post(toSendemailUrl,emailData)
+            console.log(emailResponse)
             
             
           }

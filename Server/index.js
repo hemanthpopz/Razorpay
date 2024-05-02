@@ -2,9 +2,12 @@ const express = require("express");
 const Razorpay = require("razorpay");
 const cors = require("cors");
 const crypto = require("crypto");
+const nodemailer = require('nodemailer')
 require("dotenv").config();
 
+
 const app = express();
+app.use(cors())
 const PORT = process.env.PORT;
 
 app.use(express.json());
@@ -32,6 +35,18 @@ app.post("/order", async (req, res) => {
     res.status(500).send("Error");
   }
 });
+
+
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: 'hemanthjyothula1@gmail.com',
+    pass: 'izkwfpxdraphymco '
+  },
+});
+
+
 app.post("/order/validate", async (req, res) => {
   const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
     req.body;
@@ -51,6 +66,40 @@ app.post("/order/validate", async (req, res) => {
     paymentId: razorpay_payment_id,
   });
 });
+
+
+
+
+app.post('/getData',(req,res) =>{
+
+  const {email,name} = req.body 
+  
+   sendResetPasswordEmail(email,name)
+})
+
+
+
+const sendResetPasswordEmail = async (email,name) => {
+  try {
+    const mailOptions = {
+      from: 'hemanthjyothula1@gmail.com', //enter your mail address
+      to:email ,
+      subject: 'Regarding Successfull Sevice Booking',
+      html: `<div>
+        <h1>Hi ${name},</h1>
+        <h4>
+        We’re so happy you had a great experience with company website. Our team works hard to create top-of-the-line solutions, and we’re ecstatic to hear that our service has been a good fit for your need.
+        </h2>
+        <h3>Thank you,</h2>
+        <h2>Homaid Service </h1>
+      </div>`
+    };
+    await transporter.sendMail(mailOptions);
+    // console.log(`Reset password email sent to ${email} with token: ${token}`);
+  } catch (error) {
+    console.error("Error sending reset password email:", error);
+  }
+};
 
   
 app.listen(PORT, () => {

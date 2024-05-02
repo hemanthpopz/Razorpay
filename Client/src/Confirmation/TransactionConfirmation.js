@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link} from 'react-router-dom';
+import { Link,Navigate} from 'react-router-dom';
 import { PaymentContext,NameContext,NumberContext,EmailContext,ServiceContext,ModeContext} from '../App';
 
 import './index.css'
@@ -30,6 +30,13 @@ const TransactionConfirmation = () => {
   const date = new Date()
 
  const TimeOfPayment = date.getDate()+'/'+(date.getMonth()+1)+'/'+date.getFullYear()+'-'+date.getHours()+':'+date.getMinutes() 
+
+
+ if(paymentId === ''){
+
+  return <Navigate to='/'/>
+
+ }
 
   return (
     <div className='confirmation-container'>
