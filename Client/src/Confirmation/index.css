@@ -90,6 +90,25 @@
 }
 
 
+.main-transaction-container{
+    display: flex;
+    max-width: 1400px;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 40px;
+
+}
+
+
+
+.each-transaction-container{
+
+    border: 1.5px solid #3fa801;
+    padding: 30px;
+    border-radius: 10px;
+}
+
 
 @media screen and (max-width:700px) {
 

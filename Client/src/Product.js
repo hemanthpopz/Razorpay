@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch,useNavigate} from 'react-router-dom';
 import ServiceForm from './ServiceForm';
-import { PaymentContext,NameContext,EmailContext,NumberContext} from './App';
+import { PaymentContext,NameContext,NumberContext,EmailContext,ServiceContext,ModeContext} from './App';
 
 import axios from 'axios'
 import { useContext } from 'react';
@@ -15,21 +15,50 @@ function Product() {
   // const {value} = useContext(Context)
 
    
-  const [paymentId,setPaymentId] =  useContext(PaymentContext)
-
-  const [name,setName] = useContext(NameContext)
-
-  const [email,setEmail] = useContext(EmailContext)
+  
+  const [paymentId,setPaymentId] = useContext(PaymentContext)
 
 
-  const [number,setNumber] = useContext(NumberContext)
+  const [name] = useContext(NameContext)
+
+  const [number] = useContext(NumberContext)
+
+  const [email] = useContext(EmailContext)
+
+  const [service] = useContext(ServiceContext)
+
+
+  const [mode] = useContext(ModeContext) 
+
+  const date = new Date()
+
+ const TimeOfPayment = date.getDate()+'/'+(date.getMonth()+1)+'/'+date.getFullYear()+'-'+date.getHours()+':'+date.getMinutes() 
   
   
   const navigate = useNavigate()
 
+
+
+
+  const sendPaymentEmail = async () => {
+    try {
+      const emailData = { name, email };
+      const emailResponse = await axios.post('http://localhost:5000/getData', emailData);
+      console.log(emailResponse);
+    } catch (error) {
+      console.error('Error sending payment email:', error);
+    }
+  };
  
   
   const paymentHandler = async (e) => {
+
+
+    await sendPaymentEmail()
+
+
+    
+
     const response = await fetch("http://localhost:5000/order", {
       method: "POST",
       body: JSON.stringify({
@@ -76,17 +105,41 @@ function Product() {
            
 
             setPaymentId(PaymentID)
-            navigate('/success')
+            
 
 
             const toSendemailUrl = 'http://localhost:5000/getData'
+
+            const toSendUserDetalsUrl  = 'http://localhost:5000/postData'
 
             const emailData = {
               name,email
             }
 
+
+            const userData = {
+              name,
+              email,
+              number,
+              PaymentID,
+              service,
+              mode,
+              TimeOfPayment
+            }
+
             const emailResponse = await axios.post(toSendemailUrl,emailData)
-            console.log(emailResponse)
+            if(emailResponse.data === 'Success'){
+
+              const sendUserData = await axios.post(toSendUserDetalsUrl,userData)
+              if(sendUserData.data === 'success'){
+
+                navigate('/success')
+
+              }
+            }
+
+
+
             
             
           }

@@ -1,83 +1,127 @@
-import React, { useContext } from 'react';
-import { Link,Navigate} from 'react-router-dom';
-import { PaymentContext,NameContext,NumberContext,EmailContext,ServiceContext,ModeContext} from '../App';
+import React, { useContext, useState } from "react";
+import { Link, Navigate } from "react-router-dom";
+import {
+  PaymentContext,
+  NameContext,
+  NumberContext,
+  EmailContext,
+  ServiceContext,
+  ModeContext,
+} from "../App";
 
-import './index.css'
+import "./index.css";
 import { SiTicktick } from "react-icons/si";
 
+import axios from "axios";
+import { useEffect } from "react";
+
 import { FaLongArrowAltLeft } from "react-icons/fa";
-import Logo from '../Images/Homaid-logo.webp'
+import Logo from "../Images/Homaid-logo.webp";
 const TransactionConfirmation = () => {
   // const { transactionId, name, address } = useParams();
 
   // const navigate = useNavigate()
 
+  const [customerDetals, setCustomerDetails] = useState([]);
 
-  const [paymentId] = useContext(PaymentContext)
+  const [paymentId] = useContext(PaymentContext);
 
+  const [name] = useContext(NameContext);
 
-  const [name] = useContext(NameContext)
+  const [number] = useContext(NumberContext);
 
-  const [number] = useContext(NumberContext)
+  const [email] = useContext(EmailContext);
 
-  const [email] = useContext(EmailContext)
+  const [service] = useContext(ServiceContext);
 
-  const [service] = useContext(ServiceContext)
+  const [mode] = useContext(ModeContext);
 
+  const date = new Date();
 
-  const [mode] = useContext(ModeContext) 
+  const TimeOfPayment =
+    date.getDate() +
+    "/" +
+    (date.getMonth() + 1) +
+    "/" +
+    date.getFullYear() +
+    "-" +
+    date.getHours() +
+    ":" +
+    date.getMinutes();
 
-  const date = new Date()
+  useEffect(() => {
+    toGetCustomerDetails();
+  }, [customerDetals]);
 
- const TimeOfPayment = date.getDate()+'/'+(date.getMonth()+1)+'/'+date.getFullYear()+'-'+date.getHours()+':'+date.getMinutes() 
+  const toGetCustomerDetails = async () => {
+    const url = "http://localhost:5000/allCustomersDetails";
+    const response = await axios.get(url);
 
+    setCustomerDetails(response.data);
+  };
 
- if(paymentId === ''){
-
-  return <Navigate to='/'/>
-
- }
+  if (paymentId === "") {
+    return <Navigate to="/" />;
+  }
 
   return (
-    <div className='confirmation-container'>
+    <div className="confirmation-container">
       {/* <div className='logo-container'>
 
         <img src={Logo} className='logo-image'/>
         <h1 className='logo-text'>Homaid</h1>
 
       </div> */}
-      <SiTicktick className='right-tick'/>
-      <h1 className='service-heading'>Service Booked Successfully !</h1>
+      <SiTicktick className="right-tick" />
+      <h1 className="service-heading">Service Booked Successfully !</h1>
 
-      <h3 className='transaction-heading'><span>{name}</span></h3>
-
-
-      <div className='transaction-details-container'>
+      <div className="main-transaction-container">
 
       
-      <p>Transaction Id : <span>{paymentId}</span> </p>
-      <p>Number : <span>{number}</span></p>
-      <p>Email : <span>{email}</span></p>
-      <p>Service Type : <span>{service}</span></p>
-      <p>Time Of Payment : <span>{TimeOfPayment}</span> <span></span></p>
-      <p>Payment Method : <span>{mode}</span></p>
-    
-      </div>
 
-      <div className='redirect-container'>
+      {customerDetals.map((eachCustomer) => {
+        return (
+          <div className="each-transaction-container">
+            <h3 className="transaction-heading">
+              <span>{eachCustomer.name}</span>
+            </h3>
 
-        <Link className='link' to='/'>
-
-          <div className='arrow-container'>
-           < FaLongArrowAltLeft className='arrow-icon'/>
-           
-           <p>Home Page</p> 
-
+            <div className="transaction-details-container">
+              <p>
+                Transaction Id : <span>{eachCustomer.payment_id}</span>{" "}
+              </p>
+              <p>
+                Number : <span>{eachCustomer.number}</span>
+              </p>
+              <p>
+                Email : <span>{eachCustomer.email}</span>
+              </p>
+              <p>
+                Service Type : <span>{eachCustomer.service}</span>
+              </p>
+              <p>
+                Time Of Payment : <span>{eachCustomer.time_of_payment}</span>{" "}
+                <span></span>
+              </p>
+              <p>
+                Payment Method : <span>{eachCustomer.mode}</span>
+              </p>
+            </div>
           </div>
-           
-           
-           </Link>
+        );
+      })}
 
+
+</div>
+
+      <div className="redirect-container">
+        <Link className="link" to="/">
+          <div className="arrow-container">
+            <FaLongArrowAltLeft className="arrow-icon" />
+
+            <p>Home Page</p>
+          </div>
+        </Link>
       </div>
     </div>
   );
